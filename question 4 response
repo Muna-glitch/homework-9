@@ -1,0 +1,11 @@
+Q4: 
+
+What is a PDO in PHP? Why do we need to use prepared statements?
+
+PDO (PHP Data Objects) is an extension. It is a PHP extension, and its main function is to provide a consistent interface 
+for accessing databases in PHP and allows us to to use and actually interact w databases.
+
+We need prepared statements are a feature that is available because of PDO which allows us to do more with SQL. It is considered
+a "best practice' by many for secuirity, performance, clarify, flexibility reasons,and more. Prepared statements can help prevent attacks by separating SQL from data, it can
+improve performance bc SQL can now execute the same exact query but using different paramaeters. Also since the code and logic is separate it can make the 
+code very readable. So overall its a good practice to use PDO in PHP when working with databases.
