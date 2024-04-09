@@ -41,13 +41,14 @@ class PostController
     }
 
     public function getPosts($id) {
+        $postModel = new Post(); 
         header("Content-Type: application/json");
         if ($id) {
-            //TODO 5-c i: get a post data by id
+            $posts = $postModel->getPostById($id); 
         } else {
-            //TODO 5-a: get all posts
+            $posts = $postModel->getAllPosts(); 
         }
-
+        echo json_encode($posts);
         exit();
     }
 
@@ -58,8 +59,13 @@ class PostController
         ];
         $postData = $this->validatePost($inputData);
 
-        //TODO 5-b: save a post
-
+        $post = new Post(); 
+        $post->savePost(
+            [
+                'title' => $postData['title'],
+                'description' => $postData['description'],
+            ]
+        );
         http_response_code(200);
         echo json_encode([
             'success' => true
@@ -72,7 +78,6 @@ class PostController
             http_response_code(404);
             exit();
         }
-
         //no built-in super global for PUT
         parse_str(file_get_contents('php://input'), $_PUT);
 
@@ -83,6 +88,14 @@ class PostController
         $postData = $this->validatePost($inputData);
 
         //TODO 5-c: update a post
+        $post = new Post();
+        $post->updatePost(
+            [
+                'id' => $id, 
+                'title' => $postData['title'],
+                'description' => $postData['description'],
+            ]
+        );
 
         http_response_code(200);
         echo json_encode([
@@ -98,6 +111,12 @@ class PostController
         }
 
         //TODO 5-d: delete a post
+        $post = new Post();
+        $post->deletePost(
+            [
+                'id' => $id,
+            ]
+        );
 
         http_response_code(200);
         echo json_encode([
@@ -121,7 +140,7 @@ class PostController
         exit();
     }
 
-    public function postsUpdateView() {
+    public function postsUpdateView() { 
         include '../public/assets/views/post/posts-update.html';
         exit();
     }
